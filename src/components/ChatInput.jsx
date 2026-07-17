@@ -5,17 +5,17 @@ const ChatInput = ({onSend, loading}) => {
     const handleSend=()=>{
         if(input.trim()==="") return
         onSend(input) // app.jsx ko input bheja
-        console.log(input)
         setinput("") // input field ko empty kr do 
     }
 
   return (
     <div className= 'flex items-center'>
         <input type='text'
+        value={input}
         onChange={(e)=>{setinput(e.target.value)}}
         onKeyDown={(e)=>e.key === 'Enter' && handleSend()}
         placeholder='Type a message...'
-        className='w-full h-fit px-[20px] py-[20px] bg-gray-500/20 text-white m-4 rounded-2xl active:border-none active:placeholder:hidden'
+        className='w-full h-fit px-[20px] py-[20px] bg-gray-500/20 text-white m-4 rounded-2xl'
         />
         <button onClick={handleSend} 
         disabled={loading}

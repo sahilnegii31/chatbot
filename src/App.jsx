@@ -4,6 +4,8 @@ import Message from './components/Message'
 import { useState } from 'react'
 import ChatInput from './components/ChatInput'
 import axios from 'axios'
+import { motion } from "motion/react"
+
 const App = () => {
     const [message, setmessage] = useState([])
     const [loading, setloading] = useState(false)
@@ -31,19 +33,24 @@ const App = () => {
       }
     )
       const reply= response.data.choices[0].message.content
-      setmessage([...message, {role:"model",text : reply}])
+      setmessage([...newmessage, {role:"model",text : reply}])
     } catch (error) {
       console.log("error generating response!!",error)
-      console.log(error.response.data);
     } finally{setloading(false)}
-    console.log(message)
   }
     
     
     return (
-    <div className='bg-[#0f0f0f] min-h-screen h-full px-20 text-white'>
+    <div className='bg-[#0f0f0f] min-h-screen h-full px-50 text-white'>
       <ChatBot message={message} />
-      <Message role={message.role} text={message.text} messages={message}/>
+      {message.map((msg,index)=>{
+        return <motion.div key={index}
+        initial={{opacity: 0, y:20 }}
+        animate={{opacity: 1 , y:0}}
+        transition={{duraiton:0.5}} >
+          <Message key={index} role={msg.role} text={msg.text}/>
+          </motion.div>
+      })}
       <ChatInput onSend={sendMessage} loading={loading}/>
     </div>
   )
