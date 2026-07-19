@@ -5,6 +5,8 @@ import { useState } from 'react'
 import ChatInput from './components/ChatInput'
 import axios from 'axios'
 import { motion } from "motion/react"
+import Button from './components/Button'
+import Home from './components/Home'
 
 const App = () => {
     const [message, setmessage] = useState([])
@@ -38,11 +40,26 @@ const App = () => {
       console.log("error generating response!!",error)
     } finally{setloading(false)}
   }
-    
+
+
+  const weather= async (userText)=>{
+    try {
+      const response = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${userText}&limit=5&appid=${VITE_WEATHER_API_KEY}`)
+      console.log(response);
+      
+    } catch (error) {
+      console.log("error retreving data from api ",error);
+    }
+
+  }
+
+
+
+  const [active, setactive] = useState("Chat")  // for buttons
     
     return (
     <div className='bg-[#0f0f0f] min-h-screen h-full px-50 text-white'>
-      <ChatBot message={message} />
+      {/* <ChatBot message={message} />
       {message.map((msg,index)=>{
         return <motion.div key={index}
         initial={{opacity: 0, y:20 }}
@@ -51,7 +68,9 @@ const App = () => {
           <Message key={index} role={msg.role} text={msg.text}/>
           </motion.div>
       })}
-      <ChatInput onSend={sendMessage} loading={loading}/>
+      <Button activeMode={active} onModeChange={setactive}/>
+      <ChatInput onSend={sendMessage} loading={loading}/> */}
+      <Home />
     </div>
   )
 }
