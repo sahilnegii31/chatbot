@@ -2,6 +2,13 @@
 *{
     font-family: "Poppins";
 }
+html,
+body,
+#root{
+    margin:0;
+    padding: 0;
+    background : #0d0d0d;
+}
 .glow:hover{
     transform: scale(1.02);
     box-shadow: 3px 3px 10px 

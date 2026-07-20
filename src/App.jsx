@@ -59,7 +59,7 @@ const App = () => {
   const [active, setactive] = useState("Chat")  // for buttons
     
     return (
-    <div className='bg-[#0f0f0f] min-h-screen h-full px-5 text-white'>
+    <div className='bg-[#0f0f0f] h-full px-5 text-white'>
       {/* <ChatBot message={message} />
       {message.map((msg,index)=>{
         return <motion.div key={index}
