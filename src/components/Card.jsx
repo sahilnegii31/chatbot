@@ -6,7 +6,7 @@ const Card = (feature) => {
     style={{
         color: feature.col
     }}>
-      <h1 className='text-4xl font-bold'>{feature.title}</h1>
+      <h1 className='text-4xl font-bold'>{feature.title} {feature.icon}</h1>
       <p className='text-xl'>{feature.desc}</p>
     </div>
   )
