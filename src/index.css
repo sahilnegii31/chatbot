@@ -1,1 +1,9 @@
 @import "tailwindcss";
+*{
+    font-family: "Poppins";
+}
+.glow:hover{
+    transform: scale(1.02);
+    box-shadow: 3px 3px 10px 
+                ,-3px -3px 10px;
+}

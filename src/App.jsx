@@ -7,6 +7,7 @@ import axios from 'axios'
 import { motion } from "motion/react"
 import Button from './components/Button'
 import Home from './components/Home'
+import Navbar from './components/Navbar'
 
 const App = () => {
     const [message, setmessage] = useState([])
@@ -58,7 +59,7 @@ const App = () => {
   const [active, setactive] = useState("Chat")  // for buttons
     
     return (
-    <div className='bg-[#0f0f0f] min-h-screen h-full px-50 text-white'>
+    <div className='bg-[#0f0f0f] min-h-screen h-full px-5 text-white'>
       {/* <ChatBot message={message} />
       {message.map((msg,index)=>{
         return <motion.div key={index}
