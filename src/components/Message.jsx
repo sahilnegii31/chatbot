@@ -1,9 +1,14 @@
 import React from 'react'
 import ReactMarkDown from "react-markdown"
 import remarkGfm from 'remark-gfm'
-const Message = ({role,text}) => {
+import Weatherbtn from './Weatherbtn'
+const Message = ({role,text,type}) => {
     console.log(text)
     const isUser = role ==="user"
+
+    if(type==="weather"){
+        return <Weatherbtn data={text}/>
+    }
   return (
     <>
     <div className={isUser ? ' flex items-end p-4 gap-2 flex-row-reverse':' flex items-end p-4 gap-2 justify-start' }>

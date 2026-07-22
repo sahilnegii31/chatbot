@@ -5,7 +5,6 @@ import Card from "./Card";
 import Footer from "../Footer";
 import { features, steps, frontend , deployment, development , Apis } from "./data";
 
-console.log(features);
 const Home = () => {
   return (
     <div className="h-full">
@@ -14,7 +13,6 @@ const Home = () => {
       <h1 className="text-center text-6xl font-bold my-6">Features</h1>
       <div className="flex flex-wrap gap-5 justify-center">
         {features.map((feature, idx) => {
-          console.log("titles", feature.title);
           return (
             <Card
               key={idx}
@@ -31,7 +29,7 @@ const Home = () => {
         <div className="flex flex-col gap-5 w-full h-full">
           {steps.map((step, idx) => {
             return (
-              <div
+              <div key={idx}
                 className=" w-full h-fit border-1 flex flex-col justify-center gap-2 px-[30px] py-[30px] rounded-2xl"
                 style={{
                   color: step.color,
@@ -53,7 +51,7 @@ const Home = () => {
         <div className="flex flex-col gap-5 md:flex-row">
           {frontend.map((frontend, idx) => {
             return (
-              <div
+              <div key={idx}
                 className=" w-fit h-fit min-h-[12rem] border-1 flex flex-col gap-2 transition-all px-[30px] py-[30px] rounded-2xl glow cursor-pointer text-[#7c3aed]">
                 <h1 className="text-4xl font-bold">{frontend.title}</h1>
                 <p className="text-xl">{frontend.desc}</p>
@@ -64,7 +62,7 @@ const Home = () => {
         <div className="flex flex-col flex-wrap gap-5 md:flex-row">
           {Apis.map((Apis, idx) => {
             return (
-              <div
+              <div key={idx}
                 className=" w-[18rem] h-fit min-h-[13rem] border-1 flex flex-col gap-2 transition-all px-[30px] py-[30px] rounded-2xl glow cursor-pointer text-[#0ea5e9]">
                 <h1 className="text-4xl font-bold">{Apis.title}</h1>
                 <p className="text-xl">{Apis.desc}</p>
@@ -75,7 +73,7 @@ const Home = () => {
         <div className="flex flex-col gap-5 md:flex-row">
           {development.map((development, idx) => {
             return (
-              <div
+              <div key={idx}
                 className=" w-fit h-fit min-h-[10rem] border-1 flex flex-col gap-2 transition-all px-[30px] py-[30px] rounded-2xl glow cursor-pointer text-[#6b7280]">
                 <h1 className="text-4xl font-bold">{development.title}</h1>
                 <p className="text-xl">{development.desc}</p>
@@ -86,7 +84,7 @@ const Home = () => {
         <div className="flex flex-col gap-5 md:flex-row">
           {deployment.map((deployment, idx) => {
             return (
-              <div
+              <div key={idx}
                 className=" w-fit h-fit border-1 flex flex-col gap-2 transition-all px-[30px] py-[30px] rounded-2xl glow cursor-pointer text-[#10b981]">
                 <h1 className="text-4xl font-bold">{deployment.title}</h1>
                 <p className="text-xl">{deployment.desc}</p>

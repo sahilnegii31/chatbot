@@ -1,8 +1,8 @@
 import { color } from 'motion'
 import React , {useState} from 'react'
 
+
 const Button = ({activeMode , onModeChange}) => {
-    console.log(activeMode)
     const modes = [
   { id: "chat",    label: "Chat",    icon: "ti-robot",        color: "#7c3aed" },
   { id: "weather", label: "Weather", icon: "ti-cloud",        color: "#0ea5e9" },
