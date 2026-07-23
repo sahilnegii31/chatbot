@@ -40,8 +40,16 @@ const App = () => {
     // else if (activeMode=="github"){
     //   reply= await github(usertext)
     // }
-    else if(activeMode=="news"){
-      reply = await News(userText)
+    else if(active ==="news"){
+      reply = await news(userText);
+      setmessage((prev) => [
+        ...prev,
+        {
+          role: "model",
+          text: reply,
+          type: "news",
+        },
+      ])
     }
     else if (active === "chat") {
       try {
@@ -83,7 +91,6 @@ const App = () => {
     const response = await axios.get(
       `https://api.openweathermap.org/geo/1.0/direct?q=${userText}&limit=5&appid=${import.meta.env.VITE_WEATHER_API_KEY}`,
     );
-    console.log(response);
     const lat = response.data[0].lat;
     const lon = response.data[0].lon;
     const msg = await axios.get(
@@ -104,11 +111,16 @@ const App = () => {
 
 const news= async (userText)=>{
   const newsmsg= await axios.get(`
-https://newsapi.org/v2/everything?q=${userText}&from=2026-06-23&sortBy=publishedAt&apiKey=${import.meta.env.VITE_NEWS_API_KEY}`)
+    https://newsapi.org/v2/everything?q=${userText}&from=2026-06-23&sortBy=publishedAt&apiKey=${import.meta.env.VITE_NEWS_API_KEY}`)
+    console.log(newsmsg);
+    return {
+    name:newsmsg.data.articles[0].source.name,
+    dop:newsmsg.data.articles[0].publishedAt,
+    desc:newsmsg.data.articles[0].description,
+    content:newsmsg.data.articles[0].content
+  }  
+
 }
-
-
-  console.log("message is : ", message);
 
   return (
     <div className="bg-[#0f0f0f] h-full px-5 text-white">
