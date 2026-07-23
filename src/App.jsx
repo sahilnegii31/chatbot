@@ -9,6 +9,7 @@ import Button from "./components/Button";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import News from "./components/News";
+import Github from "./components/Github";
 // import Weatherbtn from './components/Weatherbtn'
 
 const App = () => {
@@ -37,20 +38,26 @@ const App = () => {
         },
       ]);
     }
-    // else if (activeMode=="github"){
-    //   reply= await github(usertext)
+    else if (active=="github"){
+      reply= await github(userText)
+      setmessage((prev)=>[
+        ...prev ,{
+          role:"model",
+          text:reply,
+          type:"github"
+        }
+      ])}
+    // else if(active ==="news"){
+    //   reply = await news(userText);
+    //   setmessage((prev) => [
+    //     ...prev,
+    //     {
+    //       role: "model",
+    //       text: reply,
+    //       type: "news",
+    //     },
+    //   ])
     // }
-    else if(active ==="news"){
-      reply = await news(userText);
-      setmessage((prev) => [
-        ...prev,
-        {
-          role: "model",
-          text: reply,
-          type: "news",
-        },
-      ])
-    }
     else if (active === "chat") {
       try {
         const response = await axios.post(
@@ -60,12 +67,18 @@ const App = () => {
             messages: newmessage.map((msg) => ({
               role: msg.role === "model" ? "assistant" : msg.role,
               content:
-                msg.type === "weather"
-                  ? typeof msg.text === "string"
-                    ? msg.text
-                    : `Weather in ${msg.text.city}: ${msg.text.desc}, ${msg.text.temp}K, humidity ${msg.text.humidity}%, wind ${msg.text.wind}`
-                  : msg.text,
-            })),
+  msg.type === "weather"
+    ? typeof msg.text === "string"
+      ? msg.text
+      : `Weather in ${msg.text.city}: ${msg.text.desc}, ${msg.text.temp}K, humidity ${msg.text.humidity}%, wind ${msg.text.wind}`
+    : msg.type === "github"
+      ? typeof msg.text === "string"
+        ? msg.text
+        : msg.text.kind === "repo"
+          ? `GitHub repo ${msg.text.owner}/${msg.text.name}: ${msg.text.description || "No description"}, ${msg.text.stars} stars, ${msg.text.forks} forks, written in ${msg.text.language}`
+          : `GitHub user ${msg.text.username} (${msg.text.name || "no name set"}): ${msg.text.bio || "no bio"}, ${msg.text.followers} followers, ${msg.text.publicRepos} public repos`
+      : msg.text,
+})),
           },
           {
             headers: {
@@ -107,20 +120,54 @@ const App = () => {
     };
   };
 
-{/*NEWS API*/}
+// {/*NEWS API*/}
 
-const news= async (userText)=>{
-  const newsmsg= await axios.get(`
-    https://newsapi.org/v2/everything?q=${userText}&from=2026-06-23&sortBy=publishedAt&apiKey=${import.meta.env.VITE_NEWS_API_KEY}`)
-    console.log(newsmsg);
+// const news= async (userText)=>{
+//   const newsmsg= await axios.get(`
+//     https://newsapi.org/v2/everything?q=${userText}&from=2026-06-23&sortBy=publishedAt&apiKey=${import.meta.env.VITE_NEWS_API_KEY}`)
+//     console.log(newsmsg);
+//     return {
+//     name:newsmsg.data.articles[0].source.name,
+//     dop:newsmsg.data.articles[0].publishedAt,
+//     desc:newsmsg.data.articles[0].description,
+//     content:newsmsg.data.articles[0].content
+//   }  
+
+// }
+
+{/*GITHUB*/}
+
+const github = async (userText) => {
+  const trimmed = userText.trim();
+
+  if (trimmed.includes("/")) {
+    const [owner, repo] = trimmed.split("/");
+    const response = await axios.get(`https://api.github.com/repos/${owner}/${repo}`);
     return {
-    name:newsmsg.data.articles[0].source.name,
-    dop:newsmsg.data.articles[0].publishedAt,
-    desc:newsmsg.data.articles[0].description,
-    content:newsmsg.data.articles[0].content
-  }  
+      kind: "repo",
+      name: response.data.name,
+      owner: response.data.owner.login,
+      description: response.data.description,
+      stars: response.data.stargazers_count,
+      forks: response.data.forks_count,
+      language: response.data.language,
+      url: response.data.html_url,
+    };
+  } else {
 
-}
+    const response = await axios.get(`https://api.github.com/users/${trimmed}`);
+    return {
+      kind: "user",
+      username: response.data.login,
+      name: response.data.name,
+      followers: response.data.followers,
+      following: response.data.following,
+      repos_url: response.data.repos_url,
+      url: response.data.html_url,
+    };
+  }
+  console.log("github msg : ",msg);
+};
 
   return (
     <div className="bg-[#0f0f0f] h-full px-5 text-white">
@@ -143,7 +190,8 @@ const news= async (userText)=>{
       <Button activeMode={active} onModeChange={setactive} />
       <ChatInput onSend={sendMessage} loading={loading} />
       {/* <Home /> */}
-      <News />
+      {/* <News /> */}
+      {/* <Github /> */}
     </div>
   );
 };
