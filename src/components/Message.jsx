@@ -1,11 +1,17 @@
 import React from "react";
 import ReactMarkDown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import News from "./News";
 // import Weatherbtn from "./Weatherbtn";
 const Message = ({msg}) => {
+  console.log("msg is : ",msg)
   const role=msg.role
   const isUser = msg.role === "user";
-  // const { data } = {msg};
+              
+  
+  {/* WEATHER */}
+  
+  
   if (msg.type === 'weather') {
     if(role==="model"){
     return (
@@ -23,13 +29,12 @@ const Message = ({msg}) => {
         </div>
       </div>
     );}
-    else{
-      return (
-      <div>
-        <h1 className="text-5xl font-bold">{msg.text.city}</h1>            
-      </div>
-    );}
-  } else if (msg.type === 'chat') {
+                  
+  
+  {/* CHAT */}
+  
+ 
+  if (msg.type === 'chat') {
     return (
       <>
         <div
@@ -65,5 +70,14 @@ const Message = ({msg}) => {
       </>
     );
   }
-}
+                
+  
+  {/* NEWS */}
+  
+ if(msg.type==='news'){
+  return <News msg={msg}/>
+ }
+
+
+}}
 export default Message

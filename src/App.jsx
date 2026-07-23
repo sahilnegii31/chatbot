@@ -8,6 +8,7 @@ import { motion } from "motion/react";
 import Button from "./components/Button";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
+import News from "./components/News";
 // import Weatherbtn from './components/Weatherbtn'
 
 const App = () => {
@@ -39,10 +40,10 @@ const App = () => {
     // else if (activeMode=="github"){
     //   reply= await github(usertext)
     // }
-    // else if(activeMode=="news"){
-    //   reply = await News(userText)
-    // }
-    else if(active==="chat"){
+    else if(activeMode=="news"){
+      reply = await News(userText)
+    }
+    else if (active === "chat") {
       try {
         const response = await axios.post(
           "https://api.groq.com/openai/v1/chat/completions",
@@ -50,7 +51,12 @@ const App = () => {
             model: "llama-3.3-70b-versatile",
             messages: newmessage.map((msg) => ({
               role: msg.role === "model" ? "assistant" : msg.role,
-              content: msg.text,
+              content:
+                msg.type === "weather"
+                  ? typeof msg.text === "string"
+                    ? msg.text
+                    : `Weather in ${msg.text.city}: ${msg.text.desc}, ${msg.text.temp}K, humidity ${msg.text.humidity}%, wind ${msg.text.wind}`
+                  : msg.text,
             })),
           },
           {
@@ -94,19 +100,29 @@ const App = () => {
     };
   };
 
+{/*NEWS API*/}
+
+const news= async (userText)=>{
+  const newsmsg= await axios.get(`
+https://newsapi.org/v2/everything?q=${userText}&from=2026-06-23&sortBy=publishedAt&apiKey=${import.meta.env.VITE_NEWS_API_KEY}`)
+}
+
+
   console.log("message is : ", message);
 
   return (
     <div className="bg-[#0f0f0f] h-full px-5 text-white">
       <ChatBot message={message} />
       {message.map((msg, index) => {
-        {console.log(msg.type)}
+        {
+          console.log("msg is : ", msg);
+        }
         return (
           <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duraiton: 0.5 }}
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duraiton: 0.5 }}
           >
             <Message msg={msg} />
           </motion.div>
@@ -115,6 +131,7 @@ const App = () => {
       <Button activeMode={active} onModeChange={setactive} />
       <ChatInput onSend={sendMessage} loading={loading} />
       {/* <Home /> */}
+      <News />
     </div>
   );
 };
