@@ -5,12 +5,25 @@
 html,
 body,
 #root{
+    color:white;
     margin:0;
     padding: 0;
     background : #0d0d0d;
+}
+button{
+    background:linear-gradient(45deg,#7c3aed,#10b981);
+}
+button:hover{
+    opacity: 0.8;
 }
 .glow:hover{
     transform: scale(1.02);
     box-shadow: 3px 3px 10px 
                 ,-3px -3px 10px;
+}
+.span{
+    background: linear-gradient(90deg,#a855f7,#22d3ee);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

@@ -47,7 +47,7 @@ const steps=[{
 {
   id:"03",
   title:"We Fetch the Data",
-  desc: "Groq AI, Weather APIs, GitHub API and News API process your request and retrieve the relevant information.",
+  desc: "Groq AI, Weather APIs and GitHub API process your request and retrieve the relevant information.",
   color: "#6b7280"
 },
 {

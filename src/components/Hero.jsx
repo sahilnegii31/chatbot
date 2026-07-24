@@ -2,7 +2,7 @@ import React from 'react'
 
 const Hero = () => {
   return (
-    <div className='py-[5rem] text-center bg-[#0a0a0a]'>
+    <div className='py-[5rem] mt-[6rem] text-center bg-[#0a0a0a]'>
         <div className='flex flex-col gap-3 justify-center items-center'>
             <h2 className='text-6xl font-bold'>Groq AI</h2>
             <h3 className='text-2xl text-[#7c3aed]'>Chat, Search, Explore. All in One Place.</h3>

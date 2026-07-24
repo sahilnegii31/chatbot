@@ -7,10 +7,9 @@ const Button = ({activeMode , onModeChange}) => {
   { id: "chat",    label: "Chat",    icon: "ti-robot",        color: "#7c3aed" },
   { id: "weather", label: "Weather", icon: "ti-cloud",        color: "#0ea5e9" },
   { id: "github",  label: "GitHub",  icon: "ti-brand-github", color: "#6b7280" },
-  { id: "news",    label: "News",    icon: "ti-news",         color: "#10b981" },
 ]
   return (
-   <div className="flex gap-2 px-4 pt-3 flex-wrap">
+   <div className="flex gap-2 px-4 pt-3 flex-wrap fixed top-0 left-15 z-3 bg-black">
       {modes.map(mode => (
         <button
           key={mode.id}

@@ -12,18 +12,18 @@ const Message = ({ msg }) => {
   {
     /* WEATHER */
   }
-
-  if (msg.type === "weather") {
+  const temp=Number((msg.text.temp-273.15).toFixed(2))
+    if (msg.type === "weather") {
     if (role === "model") {
       return (
         <div className="flex mt-3 flex-col gap-5">
           <div className="border-1 rounded-3xl border-gray-500 w-fit h-fit flex flex-col gap-5 px-[30px] py-[20px] text-center">
             <h1 className="text-5xl font-bold">{msg.text.city}</h1>
-            <h2 className="text-3xl-4xl text-gray-300">{msg.text.desc}</h2>
+            <h2 className="text-4xl font-bold text-gray-300">{msg.text.desc}</h2>
             <div className="text-start text-2xl">
-              <h2>Humidity : {msg.text.humidity}</h2>
-              <h2>Temperature : {msg.text.temp} (K) </h2>
-              <h2>Wind : {msg.text.wind}</h2>
+              <h2><span className="font-bold text-xl">Humidity : </span>{msg.text.humidity}</h2>
+              <h2><span className="font-bold text-xl">Temperature : </span>{temp} (C) </h2>
+              <h2><span className="font-bold text-xl">Wind :</span> {msg.text.wind}</h2>
             </div>
           </div>
         </div>
@@ -92,28 +92,30 @@ const Message = ({ msg }) => {
     // <Github msg={msg} />;
       if (msg.text.kind === "user") {
     return (
-      <div className="w-full mt-3 h-fit py-[20px] flex justify-center flex-col items-center gap-4 border-2 border-gray-500 rounded-3xl text-center">
+      <div className="w-fit min-w-96 mt-3 h-fit py-[20px] flex justify-center flex-col items-center gap-4 border-2 border-gray-500 rounded-3xl text-center">
         <div className="border-2 border-gray rounded-full w-50 h-50">
-          <img src={msg.text.url} alt="pfp"></img>
+          <img className="rounded-full w-50 h-50" src={msg.text.url} alt="pfp"></img>
         </div>
         <div className="items-start">
           <h1 className="text-3xl">{msg.text.username} </h1>
-          <p className="text-xl">Followers : {msg.text.followers} </p>
+          <p className="text-xl">Followers : {msg.text.bio} </p>
           <p className="text-xl">Following : {msg.text.following} </p>
-          <a href={msg.text.repos_url} className="text-gray-300 underline text-xl">Repository link</a>
+          <a href={`https://github.com/${msg.text.username}?tab=repositories`} target="_blank" className="text-gray-300 underline text-xl">Repository link</a>
         </div>
       </div>
     );
   } else if(msg.text.kind === "repo") {
-    <div className="w-full mt-3 h-fit flex justify-center flex-col items-center gap-6 border-2 border-gray-500 rounded-3xl text-center">
-      <div className="items-start">
-        <h1>{msg.text.name} </h1>
-        <h1>{msg.text.owner}</h1>
-        <p>{msg.text.description}</p>
+    return (
+    <div className="w-fit min-w-96 mt-3 h-fit flex justify-center flex-col items-center gap-6 border-2 border-gray-500 rounded-3xl text-center">
+      <div className="flex flex-col gap-3 px-[20px] w-[20rem] py-[20px]">
+        <h1 className="text-3xl font-bold"><span className="font-bold text-2xl">Repo Name:</span> {msg.text.name} </h1>
+        <h1><span className="font-bold text-xl">Username:</span> {msg.text.owner}</h1>
+        <p><span className="font-bold text-xl">Description:</span> {msg.text.description}</p>
         <p>{msg.text.starts}</p>
-        <a href={msg.text.repos_url}>Repository link</a>
+        <a href={msg.text.repos_url} target="_blank" className="underline cursor-pointer text-gray-500 text-2xl">Repository link</a>
       </div>
-    </div>;
+    </div>
+    )
   }
   }
 };

@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-
+import { FaPaperPlane } from 'react-icons/fa'
+import { IoSend } from 'react-icons/io5'
+import { RiSendPlaneFill } from 'react-icons/ri'
 
 const ChatInput = ({onSend, loading}) => {
     const [input, setinput] = useState("")
@@ -11,7 +13,8 @@ const ChatInput = ({onSend, loading}) => {
     }
 
   return (
-    <div className= 'flex items-center'>
+    <div className= 'flex items-center fixed bottom-0 bg-black w-full'>
+      
         <input type='text'
         value={input}
         onChange={(e)=>{setinput(e.target.value)}}
@@ -21,7 +24,9 @@ const ChatInput = ({onSend, loading}) => {
         />
         <button onClick={handleSend} 
         disabled={loading}
-        className={`bg-purple-600 rounded-full px-[30px] py-[20px] text-white ${loading ? "opacity-50 cursor-not-allowed" :""} `}>S</button>   {/* jb api call ho rahi hai tb disable hoga */}
+        className={`rounded-full px-[30px] py-[20px] text-white ${loading ? "opacity-50 cursor-not-allowed" :""} `}>
+          <FaPaperPlane />  
+        </button>   {/* jb api call ho rahi hai tb disable hoga */}
     </div>
   )
 }
